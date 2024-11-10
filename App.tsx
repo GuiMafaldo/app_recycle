@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native'; 
+
+import MainTabNavigator from './routes';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useAuth } from './Auth';
+import LoginScreen from './LoginScreen';
+import HomeScreen from './HomeScreen';
+
+
+
+const Stack = createStackNavigator();
+
+const App =() => {
+  const { isAuthenticated } = useAuth();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false}}/>
+              {isAuthenticated ? (
+                <Stack.Screen name="Login" component={LoginScreen} />
+              ): (    
+                
+                <Stack.Screen name="Home" component={HomeScreen} />
+                
+              )}
+            </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
   );
 }
 
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  headerLoginPage: {
+    backgroundColor: '#006836'
   },
-});
+  headerHomePage:{
+    backgroundColor: '#f0f0f0'
+  }
+})
+export default App;
+
+
