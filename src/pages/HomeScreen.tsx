@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import MyCarousel from './Carousel';
+import MyCarousel from '../components/Carousel';
 
 
 

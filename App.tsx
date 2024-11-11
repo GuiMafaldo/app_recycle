@@ -7,9 +7,9 @@ import { StyleSheet } from 'react-native';
 
 import MainTabNavigator from './routes';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useAuth } from './Auth';
-import LoginScreen from './LoginScreen';
-import HomeScreen from './HomeScreen';
+import { useAuth } from './src/components/Auth';
+import LoginScreen from './src/pages/LoginScreen';
+import HomeScreen from './src/pages/HomeScreen';
 
 
 

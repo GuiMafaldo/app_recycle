@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useAuth } from './Auth';
+import { useAuth } from '../components/Auth';
 
 
 export default function LoginScreen({ navigation }: any) {
@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation }: any) {
         <StatusBar style="auto" />
         <View style={styles.containerViewInitialPage}>      
             <View style={styles.contentViewInputs}>
-            <Image style={styles.logoInitialPage} source={require('./assets/logo2.png')} />
+            <Image style={styles.logoInitialPage} source={require('../../assets/logo2.png')} />
 
               <View style={styles.titleViewText}>
                 <Text style={styles.titleEnterYourAccount}>Entre com sua Conta</Text>
@@ -73,15 +73,15 @@ export default function LoginScreen({ navigation }: any) {
                   </TouchableOpacity>
                   <View style={styles.iconsContentView}>
                     <Image 
-                      source={require('./assets/google.png')} 
+                      source={require('../../assets/google.png')} 
                       style={styles.iconsClick}
                       />
                     <Image 
-                      source={require('./assets/linkedin.png')}
+                      source={require('../../assets/linkedin.png')}
                       style={styles.iconsClick}
                       />
                     <Image 
-                      source={require('./assets/git.png')}
+                      source={require('../../assets/git.png')}
                       style={styles.iconsClick}
                       />
                   </View>

@@ -1,9 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
-import AgendarColeta from "./AgendarColeta";
-import { useAuth } from "./Auth";
-import Contact from "./Contact";
-import HomeScreen from "./HomeScreen";
-import LoginScreen from "./LoginScreen";
+import AgendarColeta from "./src/pages/AgendarColeta";
+import { useAuth } from "./src/components/Auth";
+import Contact from "./src/pages/Contact";
+import HomeScreen from "./src/pages/HomeScreen";
+import LoginScreen from "./src/pages/LoginScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 

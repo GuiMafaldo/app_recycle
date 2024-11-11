@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput } from 'react-native';
-import DatePickerComponent from './DateComponent';
+import DatePickerComponent from '../components/DateComponent';
 
 export default function AgendarColeta() {
     return(
@@ -19,7 +19,7 @@ export default function AgendarColeta() {
                     <Text style={styles.titleViewColeta}>Tipo de Material</Text>
                     <View style={styles.viewContentInputImg}>
                         <TextInput style={styles.inputColeta} placeholder='Digite o Nome do Material '/>
-                        <Image style={styles.imageSearch} source={require('./assets/lupa.png')} />
+                        <Image style={styles.imageSearch} source={require('../../assets/lupa.png')} />
                     </View>
                 </View>
                 <View style={styles.viewDate}>
