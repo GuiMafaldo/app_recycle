@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   pagination: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 160,
+    bottom: 150,
   },
   paginationDot: {
     width: 8,

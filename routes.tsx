@@ -13,7 +13,7 @@ const MainTabNavigator = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
+    <Tab.Navigator screenOptions={{headerShown: true}}>
       {!isAuthenticated ? (
         <>
           <Tab.Screen 
@@ -23,7 +23,9 @@ const MainTabNavigator = () => {
               title: 'Home',
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="home" size={size} color={color} />
-              )
+              ),
+              headerTitleAlign:'center',
+              headerTitleStyle:{fontSize:32, fontWeight: '700'}
             }}
           />
           <Tab.Screen 
@@ -33,7 +35,9 @@ const MainTabNavigator = () => {
               title: 'Agendar Coleta',
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="calendar" size={size} color={color} />
-              )
+              ),
+              headerTitleAlign:'center',
+              headerTitleStyle:{fontSize:32, fontWeight: '700'}
             }}
           />
           <Tab.Screen 
@@ -43,7 +47,9 @@ const MainTabNavigator = () => {
               title: 'Contato',
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="chatbubble" size={size} color={color} />
-              )
+              ),
+              headerTitleAlign:'center',
+              headerTitleStyle:{fontSize:32, fontWeight: '700'}
             }}
           />
         </>
