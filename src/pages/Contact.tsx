@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#34495e',
     marginBottom: 5,
-    marginLeft: 10, 
+    marginLeft: 10,
+    right:60, 
   },
   chatClosedContainer: {
     alignItems: 'center',
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginRight: 20,
+    left: 20
   },
   imageChat: {
     width: 70,

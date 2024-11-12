@@ -3,151 +3,144 @@ import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInpu
 import DatePickerComponent from '../components/DateComponent';
 
 export default function AgendarColeta() {
-    return(
+    return (
         <SafeAreaView style={styles.containerSafeArea}>
             <View>
-                <Text style={styles.titleTopContainer}>Preencha o Formulario Abaixo</Text>
+                <Text style={styles.titleTopContainer}>Preencha o Formulário</Text>
             </View>
             <View style={styles.viewFormContainer}>
                 <View style={styles.viewFormContent}>
-                    <TextInput style={styles.inputForm} placeholder='Digite seu Nome'/>
-                    <TextInput style={styles.inputForm} placeholder='Digite seu Email'/>
-                    <TextInput style={styles.inputCep} placeholder='Digite o CEP'/>
-                    <TextInput style={styles.inputNum} placeholder='Numero'/>
+                    <TextInput style={styles.inputForm} placeholder='Nome' placeholderTextColor="#555"/>
+                    <TextInput style={styles.inputForm} placeholder='Email' placeholderTextColor="#555"/>
+                    <TextInput style={styles.inputCep} placeholder='CEP' placeholderTextColor="#555"/>
+                    <TextInput style={styles.inputNum} placeholder='Número' placeholderTextColor="#555"/>
                 </View>
                 <View style={styles.viewColetaItems}>
-                    <Text style={styles.titleViewColeta}>Tipo de Material</Text>
+                    <Text style={styles.titleViewColeta}>Material</Text>
                     <View style={styles.viewContentInputImg}>
-                        <TextInput style={styles.inputColeta} placeholder='Digite o Nome do Material '/>
+                        <TextInput style={styles.inputColeta} placeholder='Nome do Material' placeholderTextColor="#555"/>
                         <Image style={styles.imageSearch} source={require('../../assets/lupa.png')} />
                     </View>
                 </View>
                 <View style={styles.viewDate}>
-                    <DatePickerComponent/>
+                    <DatePickerComponent />
                 </View>
                 <TouchableOpacity style={styles.buttonSendInfos}> 
-                    <Text style={styles.textButtonSend}>Enviar {'>'}</Text>
+                    <Text style={styles.textButtonSend}>Enviar</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
-    )    
+    )
 }
 
 const styles = StyleSheet.create({
     containerSafeArea: {
         flex: 1,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        top: 0,
+        padding: 20,
+        backgroundColor: '#f5f5f5',
     },
     titleTopContainer: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: '700',
-        top: 40
+        color: '#333',
+        marginBottom: 20,
+        textAlign: 'center',
     },
-    // PARTE DE CIMA DO FORMULARIO
     viewFormContainer: {
-        flex: 1,
-        alignItems:'center',
-        justifyContent:'center',
-        top:50,
-        width: 460,
-        maxHeight: 700,
-        borderWidth:1,
-        borderRadius: 8,
+        backgroundColor: '#fff',
+        borderRadius: 15,
+        paddingVertical: 20,
+        paddingHorizontal: 25,
+        width: '100%',
+        maxWidth: 450,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 5,
     },
     viewFormContent: {
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        maxHeight: 300,
-        gap: 16,
-        top: -120,
-        position:'relative'
+        marginBottom: 15,
     },
     inputForm: {
-        width: 400,
-        padding: 8,
-        borderWidth:1,
-        borderRadius: 5
+        backgroundColor: '#f1f1f1',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+        marginBottom: 10,
+        fontSize: 16,
+        color: '#333',
     },
     inputCep: {
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 250,
-        maxHeight: 40,
-        padding: 8,
-        left: -75,
-        borderWidth:1,
-        borderRadius: 5
+        backgroundColor: '#f1f1f1',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+        marginBottom: 10,
+        fontSize: 16,
+        width: '60%',
     },
     inputNum: {
-        width: 90,
-        maxHeight:40,
-        padding: 8,
-        borderWidth:1,
-        borderRadius: 5,
-        top: -56,
-        left: 150
-
+        backgroundColor: '#f1f1f1',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+        fontSize: 16,
+        width: '30%',
+        alignSelf: 'flex-end',
+        marginBottom: 10,
     },
-    // PARTE DE BAIXO ''''
-
     viewColetaItems: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
+        marginBottom: 20,
     },
     titleViewColeta: {
-        fontSize: 28,
+        fontSize: 20,
         fontWeight: '700',
-        top: -60
+        color: '#333',
+        marginBottom: 8,
+        left: 20
     },
-    viewContentInputImg:{
-        flex: 1,
+    viewContentInputImg: {
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'center',
-        top: -30
     },
     inputColeta: {
-        padding: 8,
-        width: 300,
-        borderWidth:1,
-        borderRadius: 5,
-        position: 'relative',
+        backgroundColor: '#f1f1f1',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+        flex: 1,
+        fontSize: 16,
+        color: '#333',
+        marginRight: 10,
+        left: 15
     },
     imageSearch: {
-        position: 'absolute',
-        right:10,
-        height: 20,
         width: 20,
-        borderWidth:1,
+        height: 20,
+        tintColor: '#888',
+        right:30
     },
-
-    // AREA DA SELEÇAO DA DATA
     viewDate: {
-        top: 30,
-        position: 'relative',
-        borderWidth: 1,
-        padding:10,
-        borderRadius: 8
+        marginBottom: 20,
+        padding: 40,
+        borderRadius: 10,
+        backgroundColor: '#f1f1f1',
+        width: '100%',
+        height: 200,
+        alignItems: 'center',  
     },
     buttonSendInfos: {
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 10,
-        width: 80,
         backgroundColor: '#3a94ff',
-        position: 'absolute', 
-        bottom: 30, 
-        borderRadius: 8
+        borderRadius: 10,
+        paddingVertical: 12,
+        alignItems: 'center',
     },
     textButtonSend: {
         color: '#fff',
         fontWeight: '700',
-        fontSize: 16
-    }
-})
+        fontSize: 18,
+    },
+});

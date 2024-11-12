@@ -1,94 +1,88 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, TouchableOpacity, Pressable } from 'react-native';
-import { StatusBar } from 'expo-status-bar'
+import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useAuth } from '../components/Auth';
-
+import { useAuth } from '../utils/Auth';
+import HomeScreen from './HomeScreen';
 
 export default function LoginScreen({ navigation }: any) {
-  const [hidden, setHidden] = useState<Boolean>(false)
+  const [hidden, setHidden] = useState(false);
   const [data, setData] = useState({
-    user: 'admin',
-    pass: 'admin123'
-  })
-  const{ dataUser, login } = useAuth()
+    user: '',
+    pass: ''
+  });
+  const { login } = useAuth();
 
-  const handleUserData =() => {
-    setData({user: 'admin', pass: 'admin123'})
-    if(data){
-      login()
-      navigation.navigate('Home')
-    } else{
-      alert('Usuário ou senha incorretos')
+  const handleUserData = () => {
+    
+    if (data.user === 'admin' && data.pass === 'admin123') {
+      login(); 
+      // navigation.navigate('HomeScreen');
+      return <HomeScreen />
+    } else {
+      alert('Usuário ou senha incorretos');
     }
-  }
+  };
 
- 
   const toggleHidden = () => {
-    setHidden(!hidden)
-  }
+    setHidden(!hidden);
+  };
+
   return (
     <SafeAreaView style={styles.containerSafeArea}>
-        <StatusBar style="auto" />
-        <View style={styles.containerViewInitialPage}>      
-            <View style={styles.contentViewInputs}>
-            <Image style={styles.logoInitialPage} source={require('../../assets/logo2.png')} />
-
-              <View style={styles.titleViewText}>
-                <Text style={styles.titleEnterYourAccount}>Entre com sua Conta</Text>
-              </View>
-                <View >
-                  <TextInput 
-                    onChangeText={handleUserData}
-                    value={data.user} 
-                    placeholder='Usuario'
-                    style={styles.inputs}
-                   
-                  />
-                  <View>
-                    <TextInput
-                      onChangeText={handleUserData} 
-                      value={data.pass}
-                      placeholder='Senha' 
-                      style={styles.inputs}
-                      secureTextEntry={!hidden}
-                    />
-                    <Pressable style={styles.clickHidden} onPress={toggleHidden}> 
-                      <MaterialCommunityIcons
-                      name={hidden ? 'eye' : 'eye-off'}
-                      size={20}
-                      color={'grey'}
-                      />
-                    </Pressable>
-                  </View>
-                </View>
-                <View style={styles.submitView}>
-                  <TouchableOpacity onPress={handleUserData} style={styles.touchableSubmit}>
-                      <Text style={styles.textButtonSubmit}>Entrar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.touchableNotSubmit}>
-                    <Text style={styles.textButtonNotSubmit}>Não tem conta? 
-                      <Text style={styles.spanButtonNotSubmit}>Cadastre-se</Text>
-                    </Text>
-                  </TouchableOpacity>
-                  <View style={styles.iconsContentView}>
-                    <Image 
-                      source={require('../../assets/google.png')} 
-                      style={styles.iconsClick}
-                      />
-                    <Image 
-                      source={require('../../assets/linkedin.png')}
-                      style={styles.iconsClick}
-                      />
-                    <Image 
-                      source={require('../../assets/git.png')}
-                      style={styles.iconsClick}
-                      />
-                  </View>
-                </View>
+      <StatusBar style="auto" />
+      <View style={styles.containerViewInitialPage}>
+        <View style={styles.contentViewInputs}>
+          <Image style={styles.logoInitialPage} source={require('../../assets/logo2.png')} />
+          <View style={styles.titleViewText}>
+            <Text style={styles.titleEnterYourAccount}>Entre com sua Conta</Text>
+          </View>
+          <View>
+            <TextInput
+              onChangeText={(text) => setData({ ...data, user: text })}
+              value={data.user}
+              placeholder='Usuario'
+              style={styles.inputs}
+            />
+            <View>
+              <TextInput
+                onChangeText={(text) => setData({ ...data, pass: text })}
+                value={data.pass}
+                placeholder='Senha'
+                style={styles.inputs}
+                secureTextEntry={!hidden}
+              />
+              <Pressable style={styles.clickHidden} onPress={toggleHidden}>
+                <MaterialCommunityIcons
+                  name={hidden ? 'eye' : 'eye-off'}
+                  size={20}
+                  color={'grey'}
+                />
+              </Pressable>
             </View>
+          </View>
+          <View style={styles.submitView}>
+            <TouchableOpacity onPress={handleUserData} style={styles.touchableSubmit}>
+              <Text style={styles.textButtonSubmit}>Entrar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.touchableNotSubmit}>
+              <Text style={styles.textButtonNotSubmit}>Não tem conta? 
+                <Text style={styles.spanButtonNotSubmit}> Cadastre-se</Text>
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.iconsContentView}>
+              <Image source={require('../../assets/google.png')} style={styles.iconsClick} />
+              <Image source={require('../../assets/linkedin.png')} style={styles.iconsClick} />
+              <Image source={require('../../assets/git.png')} style={styles.iconsClick} />
+            </View>
+          </View>
         </View>
-    </SafeAreaView >
+      </View>
+      <View style={styles.viewFooter}>
+        <Text style={styles.textFooter}>Recycle.me, Todos os direitos reservados &copy; 2024</Text>
+        <Text style={styles.textFooter}>Desenvolvido por: Guilherme Mafaldo</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -181,14 +175,16 @@ const styles = StyleSheet.create({
     top: -30  
   },
   touchableSubmit: {
-    width: 60,
+    width: 120,
     height: 40,
     borderColor: '#fff',
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: 'green',
     padding: 10,
+    paddingLeft: 40,
     top: 0,
+    left: 90
   },
   textButtonSubmit:{
     fontSize: 16,
@@ -197,7 +193,8 @@ const styles = StyleSheet.create({
   },
   // touchable not submit
   touchableNotSubmit:{
-    width: 160
+    width: 160,
+    top: -45
   },
   textButtonNotSubmit:{
     fontSize: 14,
@@ -218,7 +215,7 @@ const styles = StyleSheet.create({
     gap: 20,
     position: 'absolute',
     top: 100,
-    left: 90
+    left: 100
   },
   iconsClick: {
     width: 35,
@@ -226,5 +223,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5
+  },
+  viewFooter: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    position: 'absolute',
+    bottom: 70,
+  },
+  textFooter: {
+    fontSize:14,
+    color: '#fff',
+    fontWeight: 'bold'
   }
 });

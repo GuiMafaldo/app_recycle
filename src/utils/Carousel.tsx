@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Text} from 'react-native';
+import { ImageItem } from '../interfaces/interfaces';
 
 const { width: viewportWidth } = Dimensions.get('window');
-
-interface ImageItem {
-  uri: string;
-  alt: string;
-}
 
 const images: ImageItem[] = [
   { uri: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Image+1', alt: 'Red placeholder image with text Image 1' },

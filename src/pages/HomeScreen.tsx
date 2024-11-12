@@ -1,17 +1,11 @@
 import React from 'react';
+import { RecycleType } from '../types/types';
+
+import MyCarousel from '../utils/Carousel';
+
 import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
-
 import { Ionicons } from '@expo/vector-icons';
-import MyCarousel from '../components/Carousel';
 
-
-
-type RecycleType = {
-  id: string;
-  type: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  color: string;
-};
 
 const recycleTypes: RecycleType[] = [
   { id: '1', type: 'Papel', icon: 'newspaper-outline', color: '#3498db' },

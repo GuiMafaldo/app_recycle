@@ -1,30 +1,8 @@
 import { useState } from 'react'
 import { SafeAreaView, View, StyleSheet, Text, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { Message } from '../interfaces/interfaces';
+import Respostas from '../utils/Respostas';
 
-// Tipagem das mensagens
-interface Message {
-  text: string;
-  sender: 'user' | 'bot';
-  type: 'response';  // O campo 'type' é obrigatório
-}
-
-const respostas = [
-  {
-    id: 1,
-    texto: 'Olá tudo bem ?... em que posso ajudar?',
-    tipo: 'response',
-  },
-  {
-    id: 2,
-    texto: 'Sim, só um momento, vou encaminhar você para um de nossos atendentes disponíveis.',
-    tipo: 'response',
-  },
-  {
-    id: 3,
-    texto: 'Qualquer dúvida é só me chamar.',
-    tipo: 'response',
-  }
-];
 
 const ChatBox = () => {
   const [message, setMessage] = useState<string>('');  // Mensagem atual que está sendo digitada
@@ -46,13 +24,25 @@ const ChatBox = () => {
       let responseMessage = '';
       switch (message.toLowerCase()) {
         case 'ola':
-          responseMessage = respostas[0].texto; // Responde com a id 1
+          responseMessage = Respostas.find(res => res.id === 1)?.texto || 'Resposta não encontrada'
           break;
         case 'atendente':
-          responseMessage = respostas[1].texto; // Responde com a id 2
+          responseMessage = Respostas.find(res => res.id === 2)?.texto || 'Resposta não encontrada'
           break;
-        case 'dúvidas':
-          responseMessage = respostas[2].texto; // Responde com a id 3
+        case 'duvidas':
+          responseMessage = Respostas.find(res => res.id === 3)?.texto || 'Resposta não encontrada'
+          break;
+        case 'sobre':
+          responseMessage = Respostas.find(res => res.id === 4)?.texto || 'Resposta não encontrada'
+          break;
+        case 'serviços':
+          responseMessage = Respostas.find(res => res.id === 5)?.texto || 'Resposta não encontrada'
+          break;
+        case 'colaboradores':
+          responseMessage = Respostas.find(res => res.id === 6)?.texto || 'Resposta não encontrada'
+          break;
+        case 'contatos':
+          responseMessage = Respostas.find(res => res.id === 7)?.texto || 'Resposta não encontrada'
           break;
         default:
           responseMessage = 'Desculpe, não entendi sua mensagem. Pode reformular?'; // Resposta padrão
@@ -64,7 +54,7 @@ const ChatBox = () => {
         ...prevMessages,
         { text: responseMessage, sender: 'bot', type: 'response' },  // Inclui o campo 'type'
       ]);
-    }, 1000); // Resposta automática após 1 segundo
+    }, 1000); 
   };
 
   return (
@@ -83,7 +73,7 @@ const ChatBox = () => {
               key={index}
               style={[
                 styles.messageBox,
-                msg.sender === 'user' ? styles.userMessage : styles.botMessage, // Distinção entre as mensagens
+                msg.sender === 'user' ? styles.userMessage : styles.botMessage, 
               ]}
             >
               <Text style={styles.messageText}>{msg.text}</Text>
@@ -150,7 +140,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   messageContainer: {
-    paddingBottom: 80, // Ajuste para evitar sobreposição com a barra de entrada
+    paddingBottom: 80, 
   },
   messageBox: {
     maxWidth: '80%',
@@ -161,12 +151,12 @@ const styles = StyleSheet.create({
   userMessage: {
     backgroundColor: '#3498db',
     alignSelf: 'flex-start',
-    marginLeft: 10, // Ajuste para que as mensagens do usuário fiquem mais à esquerda
+    marginLeft: 10, 
   },
   botMessage: {
     backgroundColor: '#f39c12',
     alignSelf: 'flex-end',
-    marginRight: 10, // Ajuste para que as mensagens do bot fiquem mais à direita
+    marginRight: 10, 
   },
   messageText: {
     color: '#fff',
@@ -185,14 +175,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 60, // Definindo a altura do campo de entrada
+    height: 60, 
   },
   footerInput: {
     backgroundColor: '#ffff',
     borderRadius: 10,
     width: '80%',
     height: 50,
-    marginTop: 10,
+    marginTop: 4,
     padding: 10,
   },
   imageSendMessage: {
