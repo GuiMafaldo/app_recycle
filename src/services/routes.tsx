@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAuth } from "../utils/Auth";
 import HomeScreen from "../pages/HomeScreen";
-import AgendarColeta from "../pages/AgendarColeta";
+import AgendarColeta from '../../src/pages/AgendarColeta/AgendarColeta'
 import Contact from "../pages/Contact";
-import LoginScreen from "../pages/LoginScreen";
+import LoginScreen from "../pages/Login/LoginScreen";
 import { RootTabParamList, HomeStackParamList, AgendarColetaStackParamList, ContactStackParamList } from '../types/types';
 
 

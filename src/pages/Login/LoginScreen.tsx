@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useAuth } from '../utils/Auth';
-import HomeScreen from './HomeScreen';
+import { useAuth } from '../../../src/utils/Auth';
+import HomeScreen from '../HomeScreen';
 
 export default function LoginScreen({ navigation }: any) {
   const [hidden, setHidden] = useState(false);
@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }: any) {
       <StatusBar style="auto" />
       <View style={styles.containerViewInitialPage}>
         <View style={styles.contentViewInputs}>
-          <Image style={styles.logoInitialPage} source={require('../../assets/logo2.png')} />
+          <Image style={styles.logoInitialPage} source={require('../../../assets/logo2.png')} />
           <View style={styles.titleViewText}>
             <Text style={styles.titleEnterYourAccount}>Entre com sua Conta</Text>
           </View>
@@ -52,8 +52,8 @@ export default function LoginScreen({ navigation }: any) {
                 style={styles.inputs}
                 secureTextEntry={!hidden}
               />
-              <Pressable style={styles.clickHidden} onPress={toggleHidden}>
-                <MaterialCommunityIcons
+              <Pressable testID='toogle-visible' style={styles.clickHidden} onPress={toggleHidden}> 
+                <MaterialCommunityIcons 
                   name={hidden ? 'eye' : 'eye-off'}
                   size={20}
                   color={'grey'}
@@ -65,21 +65,21 @@ export default function LoginScreen({ navigation }: any) {
             <TouchableOpacity onPress={handleUserData} style={styles.touchableSubmit}>
               <Text style={styles.textButtonSubmit}>Entrar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.touchableNotSubmit}>
+            <TouchableOpacity style={styles.touchableNotSubmit} accessibilityRole='button' accessible={true}>
               <Text style={styles.textButtonNotSubmit}>Não tem conta? 
                 <Text style={styles.spanButtonNotSubmit}> Cadastre-se</Text>
               </Text>
             </TouchableOpacity>
             <View style={styles.iconsContentView}>
-              <Image source={require('../../assets/google.png')} style={styles.iconsClick} />
-              <Image source={require('../../assets/linkedin.png')} style={styles.iconsClick} />
-              <Image source={require('../../assets/git.png')} style={styles.iconsClick} />
+              <Image source={require('../../../assets/google.png')} style={styles.iconsClick} />
+              <Image source={require('../../../assets/linkedin.png')} style={styles.iconsClick} />
+              <Image source={require('../../../assets/git.png')} style={styles.iconsClick} />
             </View>
           </View>
         </View>
       </View>
       <View style={styles.viewFooter}>
-        <Text style={styles.textFooter}>Recycle.me, Todos os direitos reservados &copy; 2024</Text>
+        <Text testID='copy-text' style={styles.textFooter}>Recycle.me, Todos os direitos reservados &copy; 2024</Text>
         <Text style={styles.textFooter}>Desenvolvido por: Guilherme Mafaldo</Text>
       </View>
     </SafeAreaView>

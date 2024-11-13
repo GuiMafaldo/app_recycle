@@ -6,36 +6,75 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jest"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.3",
-    "@react-native-community/datetimepicker": "^8.2.0",
+    "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^7.0.1",
     "@react-navigation/native": "^7.0.0",
     "@react-navigation/native-stack": "^7.0.0",
     "@react-navigation/stack": "^7.0.0",
+    "@testing-library/react-native": "^12.8.1",
     "deprecated-react-native-prop-types": "^5.0.0",
     "expo": "~51.0.28",
     "expo-splash-screen": "~0.27.7",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-native": "0.74.5",
-    "react-native-gesture-handler": "^2.20.2",
+    "react-native-gesture-handler": "2.16.1",
     "react-native-hide-show-password-input": "^1.2.0",
     "react-native-modal-datetime-picker": "^18.0.0",
-    "react-native-reanimated": "^3.16.1",
+    "react-native-reanimated": "3.10.1",
     "react-native-reanimated-carousel": "^3.5.1",
-    "react-native-safe-area-context": "^4.14.0",
-    "react-native-screens": "^4.0.0",
+    "react-native-safe-area-context": "4.10.5",
+    "react-native-screens": "3.31.1",
     "react-native-snap-carousel": "^3.9.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@types/react": "~18.2.79",
-    "@types/react-native": "^0.72.8",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-transform-private-methods": "^7.25.9",
+    "@babel/preset-env": "^7.26.0",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.3.12",
+    "@types/react-native": "^0.73.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-expo": "^51.0.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "react-test-renderer": "^18.3.1",
     "typescript": "~5.3.3"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "setupFiles": [
+      "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!**/node_modules/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native|react-native|expo-status-bar|expo|@expo/vector-icons))"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    }
+  }
 }
