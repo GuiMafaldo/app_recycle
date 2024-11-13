@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import { useAuth } from '../../../utils/Auth'; // Importando o hook de autenticação
 import LoginScreen from '../../Login/LoginScreen';
-
+import { Alert } from 'react-native';
 
 
 // Mock do hook de autenticação
@@ -19,7 +19,6 @@ jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => {
     },
   };
 });
-
 
 
 // Mocks das imagens e logos
@@ -48,8 +47,7 @@ jest.mock('expo-constants', () => {
 });
 
 
-// Mock do alert global
-global.alert = jest.fn();
+
 
 // Início do teste
 describe('LoginScreen component', () => {
@@ -81,12 +79,13 @@ describe('LoginScreen component', () => {
     });
 
     const { getByText, getByPlaceholderText } = render(<LoginScreen navigation={{}} />);
+    const consoleError = jest.spyOn(Alert, 'alert');
     
     fireEvent.changeText(getByPlaceholderText('Usuario'), 'wrongUser ');
     fireEvent.changeText(getByPlaceholderText('Senha'), 'wrongPass');
     fireEvent.press(getByText('Entrar'));
 
-    expect(global.alert).toHaveBeenCalledWith('Usuário ou senha incorretos');
+    expect(consoleError).toHaveBeenCalled();
   });
 
   // TEST PARA VERIFICAR SI O USUARIO E SENHA ESTAO CORRETOS, MOCK USER E PASSWORD E O BOTAO

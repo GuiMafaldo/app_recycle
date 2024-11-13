@@ -89,8 +89,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         fontSize: 16,
         width: '30%',
+        height: 42,
         alignSelf: 'flex-end',
         marginBottom: 10,
+        top: -52
     },
     viewColetaItems: {
         marginBottom: 20,

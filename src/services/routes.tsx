@@ -3,9 +3,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAuth } from "../utils/Auth";
-import HomeScreen from "../pages/HomeScreen";
+import HomeScreen from "../pages/HomePage/HomeScreen";
 import AgendarColeta from '../../src/pages/AgendarColeta/AgendarColeta'
-import Contact from "../pages/Contact";
+import Contact from "../pages/Contato/Contact";
 import LoginScreen from "../pages/Login/LoginScreen";
 import { RootTabParamList, HomeStackParamList, AgendarColetaStackParamList, ContactStackParamList } from '../types/types';
 
@@ -23,7 +23,8 @@ const HomeStackScreen = () => (
     headerStyle:{
       height: 100
     }, ...stackScreenOptions
-  }}>
+  }}
+  id={undefined}>
     <HomeStack.Screen name="Home" component={HomeScreen}  />
   </HomeStack.Navigator>
 );
@@ -34,7 +35,8 @@ const AgendarColetaStackScreen = () => (
     headerStyle: {
       height: 100
       }, ...stackScreenOptions
-  }}>
+  }}
+  id={undefined}>
     <AgendarColetaStack.Screen name="AgendarColeta" component={AgendarColeta}  />
   </AgendarColetaStack.Navigator>
 );
@@ -44,7 +46,10 @@ const ContactStackScreen = () => (
     headerTintColor: '#000',
     headerStyle: {
       height: 100
-      }, ...stackScreenOptions}}>
+      }, ...stackScreenOptions
+    }}
+    id={undefined}
+    >
     <ContactStack.Screen name="Contact" component={Contact} options={{ title: 'Contate nós' }} />
   </ContactStack.Navigator>
 );
@@ -77,7 +82,9 @@ const MainTabNavigator = () => {
 
         return   <Ionicons name={iconName} size={size} color={color} />;
       },
-    })}>
+    })}
+    id={undefined}
+    >
       <Tab.Screen name="HomeStack" component={HomeStackScreen} options={{ title: 'Home'}} />
       <Tab.Screen name="AgendarColetaStack" component={AgendarColetaStackScreen} options={{ title: 'Agendar Coleta' }} />
       <Tab.Screen name="ContactStack" component={ContactStackScreen} options={{ title: 'Contato' }} />
@@ -89,7 +96,7 @@ const RootNavigator = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    <AuthStack.Navigator screenOptions={{ headerShown: false }} id={undefined}>
       {isAuthenticated ? (
         <AuthStack.Screen name="Main" component={MainTabNavigator} />
       ) : (

@@ -34,6 +34,8 @@ describe('testes para a agenda de coletas' , () => {
         expect(image).toBeTruthy()   
         expect(title).toBeTruthy() 
     }),
+
+    // TEST PRA VERIFICAR SI O PICKER CALENDARIO E O BOTAO DE ENVIAR ESTAO FUNCIONANDO
     it('Deve renderizar uma data picker "um Calendario pra selecionar data da coleta"',() => {
         const {getByText, getByTestId} = render(<AgendarColeta />)
         const datePicker = getByText('Escolha uma data')
@@ -47,10 +49,5 @@ describe('testes para a agenda de coletas' , () => {
         expect(getByText('Enviar')).toBeTruthy()
 
         expect(button).toBeTruthy()
-
-    // fireEvent.press(getByText('Escolha uma data'))
-
-    // expect(fireEvent.press('Escolha uma data')).toHaveBeenCalled()
-
     })
 })

@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, TouchableOpacit
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../../../src/utils/Auth';
-import HomeScreen from '../HomeScreen';
+import HomeScreen from '../../pages/HomePage/HomeScreen';
+import { Alert } from 'react-native';
 
 export default function LoginScreen({ navigation }: any) {
   const [hidden, setHidden] = useState(false);
@@ -20,7 +21,7 @@ export default function LoginScreen({ navigation }: any) {
       // navigation.navigate('HomeScreen');
       return <HomeScreen />
     } else {
-      alert('Usuário ou senha incorretos');
+      Alert.alert('Usuário ou senha incorretos');
     }
   };
 

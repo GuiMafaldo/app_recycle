@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { SafeAreaView, View, StyleSheet, Text, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
-import { Message } from '../interfaces/interfaces';
-import Respostas from '../utils/Respostas';
+import { Message } from '../../interfaces/interfaces';
+import Respostas from '../../utils/Respostas';
+import useModal from '../../utils/funcao';
 
 
 const ChatBox = () => {
+  const { isOpen, openModal, closeModal } = useModal();
   const [message, setMessage] = useState<string>('');  // Mensagem atual que está sendo digitada
   const [messages, setMessages] = useState<Message[]>([]);  // Estado para armazenar as mensagens
+
+
 
   // Função para enviar a mensagem
   const handleMessage = () => {
@@ -58,11 +62,13 @@ const ChatBox = () => {
   };
 
   return (
-    <SafeAreaView style={styles.containerSafeArea}>
-      <Image source={require('../../assets/wallpapper.webp')} style={styles.wallpapper} />
-      <View style={styles.headerChatbox}>
+    <SafeAreaView style={styles.containerSafeArea} testID='chat-box'>
+      <Image testID='wallpapper' source={require('../../../assets/wallpapper.webp')} style={styles.wallpapper} />
+      <View style={styles.headerChatbox} >
         <Text style={styles.headerTitleChatbox}>Bem-vindo ao nosso Chat</Text>
-        <Text style={{ left: 75, bottom: 3, fontSize: 22, fontWeight: '700' }}>{'X'}</Text>
+        <TouchableOpacity onPress={closeModal}>
+          <Text onPress={closeModal} style={{ left: 75, bottom: 3, fontSize: 22, fontWeight: '700' }}>{'X'}</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Exibição das mensagens dentro de um ScrollView */}
@@ -89,8 +95,8 @@ const ChatBox = () => {
           placeholder="Digite sua mensagem"
           onChangeText={(text) => setMessage(text)}
         />
-        <TouchableOpacity onPress={handleMessage}>
-          <Image style={styles.imageSendMessage} source={require('../../assets/send.png')} />
+        <TouchableOpacity accessibilityRole='button'  testID='button-send-message' onPress={handleMessage}>
+          <Image testID="image-send"style={styles.imageSendMessage} source={require('../../../assets/send.png')} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

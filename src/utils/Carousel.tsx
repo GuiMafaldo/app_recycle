@@ -32,7 +32,7 @@ const Carousel: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID='carousel-container'>
       <TouchableOpacity onPress={goToPrevious} style={[styles.button, styles.leftButton]}>
         <View>
           <Text style={styles.buttonText}>{'<'}</Text>

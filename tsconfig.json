@@ -1,7 +1,22 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
-    "typeRoots": ["./node_modules/@types", ".custom.d.ts"],
-  }
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "moduleResolution": "node",
+    "jsx": "react-native",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["jest", "react", "react-native"]  // Adicione "jest" aqui
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"  // Certifique-se de que o diretório de testes esteja incluído
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

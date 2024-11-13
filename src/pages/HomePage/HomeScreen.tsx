@@ -1,13 +1,13 @@
 import React from 'react';
-import { RecycleType } from '../types/types';
+import { RecycleType } from '../../types/types';
 
-import MyCarousel from '../utils/Carousel';
+import MyCarousel from '../../utils/Carousel';
 
 import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 
-const recycleTypes: RecycleType[] = [
+export const recycleTypes: RecycleType[] = [
   { id: '1', type: 'Papel', icon: 'newspaper-outline', color: '#3498db' },
   { id: '2', type: 'Plástico', icon: 'water-outline', color: '#e74c3c' },
   { id: '3', type: 'Vidro', icon: 'wine-outline', color: '#2ecc71' },
@@ -31,7 +31,7 @@ export default function HomeScreen() {
         <View style={styles.contentText}>
             <Text style={styles.text}>Tipos de Reciclaveis</Text>
         </View>
-        <View style={styles.contentViewGrid}>
+        <View style={styles.contentViewGrid} testID='content-cards'>
         <FlatList
           data={recycleTypes}
           renderItem={({ item }) => <RecycleCard item={item} />}

@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 
 export type RecycleType = {
-    id: string;
+    id?: string;
     type: string;
     icon: keyof typeof Ionicons.glyphMap;
     color: string;
