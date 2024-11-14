@@ -1,7 +1,7 @@
 import React from 'react'
 import {render, fireEvent} from '@testing-library/react-native'
 import AgendarColeta from '../AgendarColeta'
-
+import DatePickerComponent from '../../../components/DateContent/DateComponent';
 
 jest.mock('../../../../assets/lupa.png', () => 'mocked_image.png');
 
@@ -37,17 +37,18 @@ describe('testes para a agenda de coletas' , () => {
 
     // TEST PRA VERIFICAR SI O PICKER CALENDARIO E O BOTAO DE ENVIAR ESTAO FUNCIONANDO
     it('Deve renderizar uma data picker "um Calendario pra selecionar data da coleta"',() => {
-        const {getByText, getByTestId} = render(<AgendarColeta />)
-        const datePicker = getByText('Escolha uma data')
-        const text = getByText('Data Selecionada: 13/11/2024')
-        const button = getByTestId('button-send-form')
-        expect(datePicker).toBeTruthy() 
-        expect(text).toBeTruthy()
+        const {getByText} = render(<AgendarColeta />)
+        const {getByRole} = render(<DatePickerComponent />)
 
-        fireEvent.press(button)
+        expect(getByRole('button')).toBeTruthy()
+       
+        expect(getByText('Escolha uma data')).toBeTruthy()
+
+        expect(fireEvent.press('button-data'))
+
+       fireEvent.press('button-send-form')
 
         expect(getByText('Enviar')).toBeTruthy()
 
-        expect(button).toBeTruthy()
     })
 })

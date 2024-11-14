@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput } from 'react-native';
-import DatePickerComponent from '../../components/DateComponent';
+import DatePickerComponent from '../../components/DateContent/DateComponent';
 
 export default function AgendarColeta() {
     return (

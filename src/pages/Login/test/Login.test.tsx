@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import { useAuth } from '../../../utils/Auth'; // Importando o hook de autenticação
 import LoginScreen from '../../Login/LoginScreen';
 import { Alert } from 'react-native';
