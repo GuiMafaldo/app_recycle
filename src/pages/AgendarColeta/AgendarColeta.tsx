@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState } from  'react'
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import DatePickerComponent from '../../components/DateContent/DateComponent';
 import emailjs from 'emailjs-com';
 
@@ -10,78 +9,107 @@ export default function AgendarColeta() {
     const [cep, setCep] = useState<string>('')
     const [numero, setNumero] = useState<string>('')
     const [material, setMaterial] = useState<string>('')
-    const [data, setData] = useState(null)
+    const [data, setData] = useState<Date | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
-      
-    // Função para enviar o formulário  
-    const handleFormSubmit = () => {
+    const validateForm = () => {
+        if (!nome || !email || !cep || !numero || !material || !data) {
+            Alert.alert('Erro', 'Por favor, preencha todos os campos');
+            return false;
+        }
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            Alert.alert('Erro', 'Por favor, insira um email válido');
+            return false;
+        }
+        return true;
+    }
+
+    const handleFormSubmit = async () => {
+        if (!validateForm()) return;
+
+        setIsLoading(true);
         const templateParams = {
             nome: nome,
             email: email,
             cep: cep,
             numero: numero,
             material: material,
-            data: data ? data.toString() : 'Não selecionada',  // Formatação de data
-            to_email: 'bicodacorujazl@gmail.com'  // O e-mail para onde será enviado
+            data: data ? data.toLocaleDateString() : 'Não selecionada',
+            to_email: '03.09gui.mafaldo@gmail.com'
         };
     
-        emailjs.send(
-            'service_l526sbg',  // O seu ID de serviço
-            'template_7hb4dvr',  // O ID do template
-            templateParams,  // Os parâmetros do template
-            'Sj03SkwQcG--LG4pT'  // Sua chave pública (public key)
-        ).then(response => {
+        try {
+            const response = await emailjs.send(
+                'service_l526sbg',
+                'template_7hb4dvr',
+                templateParams,
+                'Sj03SkwQcG--LG4pT'
+            );
             console.log('E-mail enviado com sucesso:', response);
-        }).catch(error => {
+            Alert.alert('Sucesso', 'Sua solicitação de coleta foi enviada com sucesso!');
+            // Limpar o formulário após o envio bem-sucedido
+            setNome('');
+            setEmail('');
+            setCep('');
+            setNumero('');
+            setMaterial('');
+            setData(null);
+        } catch (error) {
             console.error('Erro ao enviar e-mail:', error);
-        });
+            Alert.alert('Erro', 'Houve um problema ao enviar sua solicitação. Por favor, tente novamente mais tarde.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <SafeAreaView style={styles.containerSafeArea}>
             <View style={styles.headerComponent}>
-                <Text style={styles.headerTitle}>Formulario de Agendamento de Coleta</Text>
-            </View>
-            <View>
-                <Text style={styles.titleFormContainer}>Preencha o Formulário</Text>
+                <Text style={styles.headerTitle}>Formulário de Agendamento de Coleta</Text>
             </View>
             <View style={styles.viewFormContainer}>
+                <Text style={styles.titleFormContainer}>Preencha o Formulário</Text>
                 <View style={styles.viewFormContent}>
                     <TextInput
                         value={nome}
-                        onChangeText={(text) => setNome(text)}
+                        onChangeText={setNome}
                         placeholder='Nome' 
                         placeholderTextColor="#555" 
                         style={styles.inputForm} 
                     />
                     <TextInput 
                         value={email}
-                        onChangeText={(text) => setEmail(text)}
+                        onChangeText={setEmail}
                         placeholder='Email' 
                         placeholderTextColor="#555"
                         style={styles.inputForm} 
+                        keyboardType="email-address"
                     />
-                    <TextInput 
-                        value={cep}
-                        onChangeText={(text) => setCep(text)}
-                        placeholder='CEP' 
-                        placeholderTextColor="#555"
-                        style={styles.inputCep} 
-                    />
-                    <TextInput 
-                        value={numero}
-                        onChangeText={(text) => setNumero(text)}
-                        placeholder='Número' 
-                        placeholderTextColor="#555"
-                        style={styles.inputNum} 
-                    />
+                    <View style={styles.rowInputs}>
+                        <TextInput 
+                            value={cep}
+                            onChangeText={setCep}
+                            placeholder='CEP' 
+                            placeholderTextColor="#555"
+                            style={[styles.inputForm, styles.inputCep]} 
+                            keyboardType="numeric"
+                        />
+                        <TextInput 
+                            value={numero}
+                            onChangeText={setNumero}
+                            placeholder='Número' 
+                            placeholderTextColor="#555"
+                            style={[styles.inputForm, styles.inputNum]} 
+                            keyboardType="numeric"
+                        />
+                    </View>
                 </View>
                 <View style={styles.viewColetaItems}>
                     <Text style={styles.titleViewColeta}>Material</Text>
                     <View style={styles.viewContentInputImg}>
                         <TextInput 
                             value={material}
-                            onChangeText={(text) => setMaterial(text)}
+                            onChangeText={setMaterial}
                             placeholder='Nome do Material' 
                             placeholderTextColor="#555"
                             style={styles.inputColeta} 
@@ -92,11 +120,16 @@ export default function AgendarColeta() {
                 <View style={styles.viewDate}>
                     <DatePickerComponent 
                         value={data}
-                       onDateSelect={setData}
+                        onDateSelect={setData}
                     />
                 </View>
-                <TouchableOpacity style={styles.buttonSendInfos} testID='button-send-form' onPress={handleFormSubmit}> 
-                    <Text style={styles.textButtonSend}>Enviar</Text>
+                <TouchableOpacity 
+                    style={[styles.buttonSendInfos, isLoading && styles.buttonDisabled]} 
+                    testID='button-send-form' 
+                    onPress={handleFormSubmit}
+                    disabled={isLoading}
+                > 
+                    <Text style={styles.textButtonSend}>{isLoading ? 'Enviando...' : 'Enviar'}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -112,36 +145,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
     },
     headerComponent: {
-        flex: 1,
-        top: -82,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor:'#f5f5f5',
-        maxHeight:100,
-        width:485,
-        padding:20,
-        elevation: 5,
+        width: '100%',
+        padding: 20,
+        marginBottom: 20,
     },
-
     headerTitle: {
         fontSize: 24,
         fontWeight: '700',
         color: '#333',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    titleFormContainer: {
-        fontSize: 24,
-        fontWeight: '700',
-        color: '#333',
-        marginBottom: 20,
         textAlign: 'center',
     },
     viewFormContainer: {
         backgroundColor: '#fff',
         borderRadius: 15,
-        paddingVertical: 20,
-        paddingHorizontal: 25,
+        padding: 20,
         width: '100%',
         maxWidth: 450,
         shadowColor: '#000',
@@ -149,6 +169,13 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 8,
         elevation: 5,
+    },
+    titleFormContainer: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: '#333',
+        marginBottom: 20,
+        textAlign: 'center',
     },
     viewFormContent: {
         marginBottom: 15,
@@ -162,36 +189,24 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
     },
+    rowInputs: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     inputCep: {
-        backgroundColor: '#f1f1f1',
-        borderRadius: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 15,
-        marginBottom: 10,
-        fontSize: 16,
         width: '60%',
     },
     inputNum: {
-        backgroundColor: '#f1f1f1',
-        borderRadius: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 15,
-        fontSize: 16,
-        width: '30%',
-        height: 42,
-        alignSelf: 'flex-end',
-        marginBottom: 10,
-        top: -52
+        width: '35%',
     },
     viewColetaItems: {
         marginBottom: 20,
     },
     titleViewColeta: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '700',
         color: '#333',
         marginBottom: 8,
-        left: 20
     },
     viewContentInputImg: {
         flexDirection: 'row',
@@ -205,29 +220,28 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         color: '#333',
-        marginRight: 10,
-        left: 15
     },
     imageSearch: {
         width: 20,
         height: 20,
         tintColor: '#888',
-        right:30
+        marginLeft: -30,
     },
     viewDate: {
         marginBottom: 20,
-        padding: 40,
+        padding: 20,
         borderRadius: 10,
         backgroundColor: '#f1f1f1',
-        width: '100%',
-        height: 200,
-        alignItems: 'center',  
+        alignItems: 'center',
     },
     buttonSendInfos: {
         backgroundColor: '#3a94ff',
         borderRadius: 10,
         paddingVertical: 12,
         alignItems: 'center',
+    },
+    buttonDisabled: {
+        backgroundColor: '#cccccc',
     },
     textButtonSend: {
         color: '#fff',

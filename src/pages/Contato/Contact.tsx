@@ -1,27 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ChatBox from "../../components/ChatBot/Chatbox";
-import useModal from "../../utils/funcao";
+
 
 export default function Contact() {
-  const { isOpen, openModal, closeModal } = useModal();
+  const [isOpen, setIsOpen] = useState(false);
+
+     const openModal = () => setIsOpen(true)
+     const closeModal = () => setIsOpen(false)
+
 
   return (
     <SafeAreaView style={styles.containerSafeArea}>
       <View style={styles.viewContacts}>
-      <TouchableOpacity onPress={closeModal}>
-        <Text style={styles.titleViewContact}>Meios de Contato disponiveis</Text>
-        <View style={styles.contentSup}>
-          <Image style={styles.imageSup} source={require('../../assets/sup.png')} />
-          <View>
-            <Text style={styles.telAndEmail}>Tel: (ddd)xxxxx-xxxx</Text>
-            <Text style={styles.telAndEmail}>E-mail: exemplo@email.com</Text>
+        <TouchableOpacity onPress={closeModal}>
+          <Text style={styles.titleViewContact}>Meios de Contato disponiveis</Text>
+          <View style={styles.contentSup}>
+            <Image style={styles.imageSup} source={require('../../assets/sup.png')} />
+              <View>
+                <Text style={styles.telAndEmail}>Tel: (ddd)xxxxx-xxxx</Text>
+                <Text style={styles.telAndEmail}>E-mail: exemplo@email.com</Text>
+            </View>
           </View>
-        </View>
         </TouchableOpacity>
         
         {isOpen ? (
-          <ChatBox  /> 
+          <View style={{position: "relative", flex: 1, maxHeight: 460}}>
+            <ChatBox  /> 
+            <TouchableOpacity onPress={closeModal} style={{position:"absolute", top: 40, right: 25}}>
+              <Text style={{fontWeight: "900", fontSize: 28}}>{'x'}</Text>
+            </TouchableOpacity>
+            
+            </View>
+          
         ) : (
           <View style={styles.chatClosedContainer}> 
             <Text style={styles.textChat}>Nos envie sua mensagem através do Chat</Text>

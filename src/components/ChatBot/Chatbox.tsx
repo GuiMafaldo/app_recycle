@@ -1,12 +1,11 @@
-import { useState } from 'react'
-import { SafeAreaView, View, StyleSheet, Text, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState } from 'react'
+import { SafeAreaView, View, StyleSheet, Text, Image, TextInput, TouchableOpacity, ScrollView, Pressable, Button } from "react-native";
 import { Message } from '../../interfaces/interfaces';
 import Respostas from '../../utils/Respostas';
-import useModal from '../../utils/funcao';
+
 
 
 const ChatBox = () => {
-  const { isOpen, openModal, closeModal } = useModal();
   const [message, setMessage] = useState<string>('');  // Mensagem atual que está sendo digitada
   const [messages, setMessages] = useState<Message[]>([]);  // Estado para armazenar as mensagens
 
@@ -66,9 +65,6 @@ const ChatBox = () => {
       <Image testID='wallpapper' source={require('../../assets/wallpapper.webp')} style={styles.wallpapper} />
       <View style={styles.headerChatbox} >
         <Text style={styles.headerTitleChatbox}>Bem-vindo ao nosso Chat</Text>
-        <TouchableOpacity onPress={closeModal}>
-          <Text onPress={closeModal} style={{ left: 75, bottom: 3, fontSize: 22, fontWeight: '700' }}>{'X'}</Text>
-        </TouchableOpacity>
       </View>
 
       {/* Exibição das mensagens dentro de um ScrollView */}

@@ -24,7 +24,7 @@ const DatePickerComponent = ({ onDateSelect }: any) => {
         <View>
             <Button title="Escolha uma data" onPress={showDatePicker} />
             {selectedDate && (
-                <Text>Data Selecionada: {selectedDate.toLocaleDateString()}</Text>
+                <Text style={{marginTop: 20, fontWeight: "700", fontSize: 16}}>Data Selecionada: {selectedDate.toLocaleDateString()}</Text>
             )}
             <DateTimePickerModal
                 isVisible={isVisible}
