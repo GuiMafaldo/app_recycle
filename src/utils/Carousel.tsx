@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Text} from 'react-native';
+import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
 import { ImageItem } from '../interfaces/interfaces';
 
 const { width: viewportWidth } = Dimensions.get('window');
 
+// Defina o array de imagens
 const images: ImageItem[] = [
-  { uri: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Image+1', alt: 'Red placeholder image with text Image 1' },
-  { uri: 'https://via.placeholder.com/300/00FF00/FFFFFF?text=Image+2', alt: 'Green placeholder image with text Image 2' },
-  { uri: 'https://via.placeholder.com/300/0000FF/FFFFFF?text=Image+3', alt: 'Blue placeholder image with text Image 3' },
-  { uri: 'https://via.placeholder.com/300/FFFF00/FFFFFF?text=Image+4', alt: 'Yellow placeholder image with text Image 4' },
-  { uri: 'https://via.placeholder.com/300/FF00FF/FFFFFF?text=Image+5', alt: 'Pink placeholder image with text Image 5' },
+  { uri: require('../assets/image1.png'), alt: 'Red placeholder image with text Image 1' },
+  { uri: require('../assets/image2.png'), alt: 'Green placeholder image with text Image 2' },
+  { uri: require('../assets/image3.png'), alt: 'Blue placeholder image with text Image 3' },
+  { uri: require('../assets/test1.jpg'), alt: 'Yellow placeholder image with text Image 4' },
+  { uri: require('../assets/test2.jpg'), alt: 'Pink placeholder image with text Image 6' },
+  { uri: require('../assets/test3.jpg'), alt: 'Pink placeholder image with text Image 7' },
+  { uri: require('../assets/test4.jpg'), alt: 'Pink placeholder image with text Image 8' },
+  { uri: require('../assets/test5.jpg'), alt: 'Pink placeholder image with text Image 9' },
 ];
 
 const Carousel: React.FC = () => {
@@ -32,14 +36,14 @@ const Carousel: React.FC = () => {
   };
 
   return (
-    <View style={styles.container} testID='carousel-container'>
+    <View style={styles.container} testID="carousel-container">
       <TouchableOpacity onPress={goToPrevious} style={[styles.button, styles.leftButton]}>
         <View>
           <Text style={styles.buttonText}>{'<'}</Text>
         </View>
       </TouchableOpacity>
       <Image
-        source={{ uri: images[currentIndex].uri }}
+        source={typeof images[currentIndex].uri === 'string' ? { uri: images[currentIndex].uri } : images[currentIndex].uri}
         style={styles.image}
         accessibilityLabel={images[currentIndex].alt}
       />
@@ -74,6 +78,7 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 10,
     top: -90,
+    backgroundColor: '#fff',
   },
   button: {
     position: 'absolute',
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
   pagination: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 150,
+    bottom: 140,
   },
   paginationDot: {
     width: 8,
@@ -110,7 +115,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   paginationDotActive: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
   },
 });
 

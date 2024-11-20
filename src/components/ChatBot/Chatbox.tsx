@@ -63,7 +63,7 @@ const ChatBox = () => {
 
   return (
     <SafeAreaView style={styles.containerSafeArea} testID='chat-box'>
-      <Image testID='wallpapper' source={require('../../../assets/wallpapper.webp')} style={styles.wallpapper} />
+      <Image testID='wallpapper' source={require('../../assets/wallpapper.webp')} style={styles.wallpapper} />
       <View style={styles.headerChatbox} >
         <Text style={styles.headerTitleChatbox}>Bem-vindo ao nosso Chat</Text>
         <TouchableOpacity onPress={closeModal}>
@@ -96,7 +96,7 @@ const ChatBox = () => {
           onChangeText={(text) => setMessage(text)}
         />
         <TouchableOpacity accessibilityRole='button'  testID='button-send-message' onPress={handleMessage}>
-          <Image testID="image-send"style={styles.imageSendMessage} source={require('../../../assets/send.png')} />
+          <Image testID="image-send"style={styles.imageSendMessage} source={require('../../assets/send.png')} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

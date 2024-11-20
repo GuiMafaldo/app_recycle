@@ -1,6 +1,5 @@
-// respostas.js
 const Respostas = [
-    { id: 1, texto: 'Olá tudo bem, Como posso ajudar ?', tipo: 'response' },
+    { id: 1, texto: 'Olá tudo bem, Como posso ajudar ? Digite em poucas palavras o que você precisa! ex: "Atendente", "Sobre", "Serviços","Duvidas", "Colaboradores", "Contatos".', tipo: 'response' },
     { id: 2, texto: 'Atendente! Só um momento, vou encaminhar você para um de nossos atendentes disponíveis.', tipo: 'response' },
     { id: 3, texto: 'Duvidas! Essas são as dúvidas mais frequentes! "Quem Somos", "Qual tipo de serviço prestamos", "Quem são os nossos Colaboradores"... Para obter mais informações sobre algum desses tópicos digite "sobre", "serviços", "colaboradores".', tipo: 'response' },
     { id: 4, texto: 'Sobre! Somos um grupo de pessoas dedicadas a ajudar os cidadãos com pouco tempo disponível a descartar seus resíduos recicláveis, oferecendo um serviço de coleta domiciliar com agendamento prévio pelo nosso App.', tipo: 'response' },

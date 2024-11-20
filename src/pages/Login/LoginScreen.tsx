@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }: any) {
       <StatusBar style="auto" />
       <View style={styles.containerViewInitialPage}>
         <View style={styles.contentViewInputs}>
-          <Image style={styles.logoInitialPage} source={require('../../../assets/logo2.png')} />
+          <Image style={styles.logoInitialPage} source={require('../../assets/logo2.png')} />
           <View style={styles.titleViewText}>
             <Text style={styles.titleEnterYourAccount}>Entre com sua Conta</Text>
           </View>
@@ -72,9 +72,9 @@ export default function LoginScreen({ navigation }: any) {
               </Text>
             </TouchableOpacity>
             <View style={styles.iconsContentView}>
-              <Image source={require('../../../assets/google.png')} style={styles.iconsClick} />
-              <Image source={require('../../../assets/linkedin.png')} style={styles.iconsClick} />
-              <Image source={require('../../../assets/git.png')} style={styles.iconsClick} />
+              <Image source={require('../../assets/google.png')} style={styles.iconsClick} />
+              <Image source={require('../../assets/linkedin.png')} style={styles.iconsClick} />
+              <Image source={require('../../assets/git.png')} style={styles.iconsClick} />
             </View>
           </View>
         </View>
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     marginBottom: 20,
-    top: -110
+    top: -110,
   },
   // content inputs e buttons
   contentViewInputs: {

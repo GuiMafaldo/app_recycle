@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Button, Text } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const DatePickerComponent = () => {
+const DatePickerComponent = ({ onDateSelect }: any) => {
     const [isVisible, setIsVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -16,26 +16,24 @@ const DatePickerComponent = () => {
 
     const handleConfirm = (date: any) => {
         setSelectedDate(date);
+        onDateSelect(date); // Passa a data selecionada para o componente pai
         hideDatePicker();
     };
 
     return (
-        <View testID="calendario">
-            <Button testID="button-data" title="Escolha uma data" onPress={showDatePicker} />
+        <View>
+            <Button title="Escolha uma data" onPress={showDatePicker} />
             {selectedDate && (
-                <Text testID="selected-date">
-                    Data Selecionada: {selectedDate.toLocaleDateString()}
-                </Text>
+                <Text>Data Selecionada: {selectedDate.toLocaleDateString()}</Text>
             )}
             <DateTimePickerModal
-                testID="date-picker-modal"
                 isVisible={isVisible}
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                
             />
         </View>
     );
 };
+
 export default DatePickerComponent;

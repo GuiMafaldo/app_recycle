@@ -1,31 +1,101 @@
 import React from 'react';
+import { useState } from  'react'
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput } from 'react-native';
 import DatePickerComponent from '../../components/DateContent/DateComponent';
+import emailjs from 'emailjs-com';
 
 export default function AgendarColeta() {
+    const [nome, setNome] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [cep, setCep] = useState<string>('')
+    const [numero, setNumero] = useState<string>('')
+    const [material, setMaterial] = useState<string>('')
+    const [data, setData] = useState(null)
+
+      
+    // Função para enviar o formulário  
+    const handleFormSubmit = () => {
+        const templateParams = {
+            nome: nome,
+            email: email,
+            cep: cep,
+            numero: numero,
+            material: material,
+            data: data ? data.toString() : 'Não selecionada',  // Formatação de data
+            to_email: 'bicodacorujazl@gmail.com'  // O e-mail para onde será enviado
+        };
+    
+        emailjs.send(
+            'service_l526sbg',  // O seu ID de serviço
+            'template_7hb4dvr',  // O ID do template
+            templateParams,  // Os parâmetros do template
+            'Sj03SkwQcG--LG4pT'  // Sua chave pública (public key)
+        ).then(response => {
+            console.log('E-mail enviado com sucesso:', response);
+        }).catch(error => {
+            console.error('Erro ao enviar e-mail:', error);
+        });
+    };
+
     return (
         <SafeAreaView style={styles.containerSafeArea}>
+            <View style={styles.headerComponent}>
+                <Text style={styles.headerTitle}>Formulario de Agendamento de Coleta</Text>
+            </View>
             <View>
-                <Text style={styles.titleTopContainer}>Preencha o Formulário</Text>
+                <Text style={styles.titleFormContainer}>Preencha o Formulário</Text>
             </View>
             <View style={styles.viewFormContainer}>
                 <View style={styles.viewFormContent}>
-                    <TextInput style={styles.inputForm} placeholder='Nome' placeholderTextColor="#555"/>
-                    <TextInput style={styles.inputForm} placeholder='Email' placeholderTextColor="#555"/>
-                    <TextInput style={styles.inputCep} placeholder='CEP' placeholderTextColor="#555"/>
-                    <TextInput style={styles.inputNum} placeholder='Número' placeholderTextColor="#555"/>
+                    <TextInput
+                        value={nome}
+                        onChangeText={(text) => setNome(text)}
+                        placeholder='Nome' 
+                        placeholderTextColor="#555" 
+                        style={styles.inputForm} 
+                    />
+                    <TextInput 
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                        placeholder='Email' 
+                        placeholderTextColor="#555"
+                        style={styles.inputForm} 
+                    />
+                    <TextInput 
+                        value={cep}
+                        onChangeText={(text) => setCep(text)}
+                        placeholder='CEP' 
+                        placeholderTextColor="#555"
+                        style={styles.inputCep} 
+                    />
+                    <TextInput 
+                        value={numero}
+                        onChangeText={(text) => setNumero(text)}
+                        placeholder='Número' 
+                        placeholderTextColor="#555"
+                        style={styles.inputNum} 
+                    />
                 </View>
                 <View style={styles.viewColetaItems}>
                     <Text style={styles.titleViewColeta}>Material</Text>
                     <View style={styles.viewContentInputImg}>
-                        <TextInput style={styles.inputColeta} placeholder='Nome do Material' placeholderTextColor="#555"/>
-                        <Image testID='lupa-image' style={styles.imageSearch} source={require('../../../assets/lupa.png')} />
+                        <TextInput 
+                            value={material}
+                            onChangeText={(text) => setMaterial(text)}
+                            placeholder='Nome do Material' 
+                            placeholderTextColor="#555"
+                            style={styles.inputColeta} 
+                        />
+                        <Image testID='lupa-image' style={styles.imageSearch} source={require('../../assets/lupa.png')} />
                     </View>
                 </View>
                 <View style={styles.viewDate}>
-                    <DatePickerComponent />
+                    <DatePickerComponent 
+                        value={data}
+                       onDateSelect={setData}
+                    />
                 </View>
-                <TouchableOpacity style={styles.buttonSendInfos} testID='button-send-form'> 
+                <TouchableOpacity style={styles.buttonSendInfos} testID='button-send-form' onPress={handleFormSubmit}> 
                     <Text style={styles.textButtonSend}>Enviar</Text>
                 </TouchableOpacity>
             </View>
@@ -41,7 +111,26 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#f5f5f5',
     },
-    titleTopContainer: {
+    headerComponent: {
+        flex: 1,
+        top: -82,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:'#f5f5f5',
+        maxHeight:100,
+        width:485,
+        padding:20,
+        elevation: 5,
+    },
+
+    headerTitle: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#333',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    titleFormContainer: {
         fontSize: 24,
         fontWeight: '700',
         color: '#333',

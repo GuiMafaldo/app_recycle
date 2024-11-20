@@ -21,7 +21,7 @@ const HomeStackScreen = () => (
   <HomeStack.Navigator screenOptions={{headerShown: true,
     headerTintColor: '#000',
     headerStyle:{
-      height: 100
+      height: 100,
     }, ...stackScreenOptions
   }}
   id={undefined}>
@@ -30,7 +30,7 @@ const HomeStackScreen = () => (
 );
 
 const AgendarColetaStackScreen = () => (
-  <AgendarColetaStack.Navigator screenOptions={{ headerShown: true,
+  <AgendarColetaStack.Navigator screenOptions={{ headerShown: false,
     headerTintColor: '#000',
     headerStyle: {
       height: 100
@@ -50,7 +50,7 @@ const ContactStackScreen = () => (
     }}
     id={undefined}
     >
-    <ContactStack.Screen name="Contact" component={Contact} options={{ title: 'Contate nós' }} />
+    <ContactStack.Screen name="Contact" component={Contact} options={{ title: 'Contate-nós' }} />
   </ContactStack.Navigator>
 );
 

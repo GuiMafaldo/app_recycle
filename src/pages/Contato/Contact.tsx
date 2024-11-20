@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ChatBox from "../../components/ChatBot/Chatbox";
 import useModal from "../../utils/funcao";
@@ -10,9 +10,9 @@ export default function Contact() {
     <SafeAreaView style={styles.containerSafeArea}>
       <View style={styles.viewContacts}>
       <TouchableOpacity onPress={closeModal}>
-        <Text style={styles.titleViewContact}>Fale Conosco</Text>
+        <Text style={styles.titleViewContact}>Meios de Contato disponiveis</Text>
         <View style={styles.contentSup}>
-          <Image style={styles.imageSup} source={require('../../../assets/sup.png')} />
+          <Image style={styles.imageSup} source={require('../../assets/sup.png')} />
           <View>
             <Text style={styles.telAndEmail}>Tel: (ddd)xxxxx-xxxx</Text>
             <Text style={styles.telAndEmail}>E-mail: exemplo@email.com</Text>
@@ -25,7 +25,7 @@ export default function Contact() {
         ) : (
           <View style={styles.chatClosedContainer}> 
             <Text style={styles.textChat}>Nos envie sua mensagem através do Chat</Text>
-            <Image style={styles.imageChat} source={require('../../../assets/chat.png')} />
+            <Image style={styles.imageChat} source={require('../../assets/chat.png')} />
             <TouchableOpacity testID="button-chat" onPress={openModal} style={styles.chatButton}>
               <Text style={styles.chatButtonText}>Iniciar Chat</Text>
             </TouchableOpacity>      
