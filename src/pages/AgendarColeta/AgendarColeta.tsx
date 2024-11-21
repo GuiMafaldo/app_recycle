@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import DatePickerComponent from '../../components/DateContent/DateComponent';
 import emailjs from 'emailjs-com';
+import { StatusBar } from 'expo-status-bar';
 
 export default function AgendarColeta() {
     const [nome, setNome] = useState<string>('')
@@ -64,6 +65,7 @@ export default function AgendarColeta() {
 
     return (
         <SafeAreaView style={styles.containerSafeArea}>
+            <StatusBar style="auto" />
             <View style={styles.headerComponent}>
                 <Text style={styles.headerTitle}>Formulário de Agendamento de Coleta</Text>
             </View>

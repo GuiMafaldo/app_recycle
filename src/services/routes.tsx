@@ -7,8 +7,7 @@ import HomeScreen from "../pages/HomePage/HomeScreen";
 import AgendarColeta from '../../src/pages/AgendarColeta/AgendarColeta'
 import Contact from "../pages/Contato/Contact";
 import LoginScreen from "../pages/Login/LoginScreen";
-import { RootTabParamList, HomeStackParamList, AgendarColetaStackParamList, ContactStackParamList } from '../types/types';
-
+import { RootTabParamList, HomeStackParamList, AgendarColetaStackParamList, ContactStackParamList, CreateStackParamList } from '../types/types';
 
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -19,9 +18,10 @@ const AuthStack = createStackNavigator();
 
 const HomeStackScreen = () => (
   <HomeStack.Navigator screenOptions={{headerShown: true,
-    headerTintColor: '#000',
+    headerTintColor: '#fff',
     headerStyle:{
-      height: 100,
+      height: 120,
+      backgroundColor: '#006836'
     }, ...stackScreenOptions
   }}
   id={undefined}>
@@ -29,11 +29,13 @@ const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
+
 const AgendarColetaStackScreen = () => (
-  <AgendarColetaStack.Navigator screenOptions={{ headerShown: false,
-    headerTintColor: '#000',
+  <AgendarColetaStack.Navigator screenOptions={{ headerShown: true,
+    headerTintColor: '#fff',
     headerStyle: {
-      height: 100
+      height: 120,
+      backgroundColor: '#006836',
       }, ...stackScreenOptions
   }}
   id={undefined}>
@@ -43,9 +45,10 @@ const AgendarColetaStackScreen = () => (
 
 const ContactStackScreen = () => (
   <ContactStack.Navigator screenOptions={{headerShown: true,
-    headerTintColor: '#000',
+    headerTintColor: '#fff',
     headerStyle: {
-      height: 100
+      height: 120,
+      backgroundColor:'#006836'
       }, ...stackScreenOptions
     }}
     id={undefined}

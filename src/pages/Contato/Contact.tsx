@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ChatBox from "../../components/ChatBot/Chatbox";
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function Contact() {
@@ -12,6 +13,7 @@ export default function Contact() {
 
   return (
     <SafeAreaView style={styles.containerSafeArea}>
+      <StatusBar style="auto"/>
       <View style={styles.viewContacts}>
         <TouchableOpacity onPress={closeModal}>
           <Text style={styles.titleViewContact}>Meios de Contato disponiveis</Text>

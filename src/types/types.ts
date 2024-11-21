@@ -1,4 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
+import { NavigatorScreenParams } from '@react-navigation/native';
+
+export type RootTabParamList = {
+  HomeStack: NavigatorScreenParams<HomeStackParamList>;
+  AgendarColetaStack: NavigatorScreenParams<AgendarColetaStackParamList>;
+  ContactStack: NavigatorScreenParams<ContactStackParamList>;
+  CreateStack: NavigatorScreenParams<CreateStackParamList>;
+};
 
 export type RecycleType = {
     id?: string;
@@ -10,12 +18,7 @@ export type RecycleType = {
 export type RootStackParamList = {
     Home: undefined;
     Login: undefined;
-};
-
-export type RootTabParamList = {
-    HomeStack: undefined;
-    AgendarColetaStack: undefined;
-    ContactStack: undefined;
+    Create: undefined;
 };
   
 export type HomeStackParamList = {
@@ -29,3 +32,7 @@ export type AgendarColetaStackParamList = {
 export type ContactStackParamList = {
     Contact: any;
 };
+
+export type CreateStackParamList = {
+    Create: any;
+}

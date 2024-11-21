@@ -5,7 +5,7 @@ import MyCarousel from '../../utils/Carousel';
 
 import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import { StatusBar } from 'expo-status-bar';
 
 export const recycleTypes: RecycleType[] = [
   { id: '1', type: 'Papel', icon: 'newspaper-outline', color: '#3498db' },
@@ -27,6 +27,7 @@ export default function HomeScreen() {
  
   return (
     <SafeAreaView style={styles.containerSafeArea}>
+      <StatusBar style="auto"/>
         <MyCarousel />
         <View style={styles.contentText}>
             <Text style={styles.text}>Tipos de Reciclaveis</Text>

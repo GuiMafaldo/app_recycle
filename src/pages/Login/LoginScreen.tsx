@@ -1,27 +1,48 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { 
+  SafeAreaView, 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  Image, 
+  Pressable, 
+  Alert, 
+  StyleSheet 
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useAuth } from '../../../src/utils/Auth';
-import HomeScreen from '../../pages/HomePage/HomeScreen';
-import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../utils/Auth'; // Ajuste o caminho conforme necessário
 
-export default function LoginScreen({ navigation }: any) {
-  const [hidden, setHidden] = useState(false);
+export default function LoginRegisterScreen() {
+  const navigation = useNavigation();
+  const [formType, setFormType] = useState('initial'); // 'initial', 'login', ou 'register'
+  const [hidden, setHidden] = useState(true);
   const [data, setData] = useState({
     user: '',
-    pass: ''
+    email: '',
+    pass: '',
+    confirmPass: ''
   });
   const { login } = useAuth();
 
   const handleUserData = () => {
-    
-    if (data.user === 'admin' && data.pass === 'admin123') {
-      login(); 
-      // navigation.navigate('HomeScreen');
-      return <HomeScreen />
-    } else {
-      Alert.alert('Usuário ou senha incorretos');
+    if (formType === 'login') {
+      if (data.user === 'admin' && data.pass === 'admin123') {
+        login(); 
+        navigation.navigate('HomeScreen' as never);
+      } else {
+        Alert.alert('Usuário ou senha incorretos');
+      }
+    } else if (formType === 'register') {
+      if (data.pass !== data.confirmPass) {
+        Alert.alert('As senhas não coincidem');
+      } else {
+        // Aqui você implementaria a lógica real de cadastro
+        Alert.alert('Cadastro realizado com sucesso!');
+        setFormType('login');
+      }
     }
   };
 
@@ -29,213 +50,222 @@ export default function LoginScreen({ navigation }: any) {
     setHidden(!hidden);
   };
 
-  return (
-    <SafeAreaView style={styles.containerSafeArea}>
-      <StatusBar style="auto" />
-      <View style={styles.containerViewInitialPage}>
-        <View style={styles.contentViewInputs}>
-          <Image style={styles.logoInitialPage} source={require('../../assets/logo2.png')} />
-          <View style={styles.titleViewText}>
-            <Text style={styles.titleEnterYourAccount}>Entre com sua Conta</Text>
-          </View>
-          <View>
+  const renderForm = () => {
+    if (formType === 'initial') {
+      return (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => setFormType('login')} style={styles.button}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setFormType('register')} style={styles.button}>
+            <Text style={styles.buttonText}>Cadastre-se</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    if (formType === 'login') {
+      return (
+        <>
+          <TextInput
+            onChangeText={(text) => setData({ ...data, user: text })}
+            value={data.user}
+            placeholder='Usuário'
+            style={styles.input}
+          />
+          <View style={styles.passwordContainer}>
             <TextInput
-              onChangeText={(text) => setData({ ...data, user: text })}
-              value={data.user}
-              placeholder='Usuario'
-              style={styles.inputs}
+              onChangeText={(text) => setData({ ...data, pass: text })}
+              value={data.pass}
+              placeholder='Senha'
+              style={styles.input}
+              secureTextEntry={hidden}
             />
-            <View>
-              <TextInput
-                onChangeText={(text) => setData({ ...data, pass: text })}
-                value={data.pass}
-                placeholder='Senha'
-                style={styles.inputs}
-                secureTextEntry={!hidden}
+            <Pressable testID='toggle-visible' style={styles.eyeIcon} onPress={toggleHidden}> 
+              <MaterialCommunityIcons 
+                name={hidden ? 'eye-off' : 'eye'}
+                size={24}
+                color='grey'
               />
-              <Pressable testID='toogle-visible' style={styles.clickHidden} onPress={toggleHidden}> 
+            </Pressable>
+          </View>
+          <TouchableOpacity onPress={handleUserData} style={styles.submitButton}>
+            <Text style={styles.submitButtonText}>Entrar</Text>
+          </TouchableOpacity>
+        </>
+      );
+    }
+
+    if (formType === 'register') {
+      return (
+        <>
+          <TextInput
+            onChangeText={(text) => setData({ ...data, email: text })}
+            value={data.email}
+            placeholder='Email'
+            style={styles.input}
+            keyboardType="email-address"
+          />
+          <TextInput
+            onChangeText={(text) => setData({ ...data, user: text })}
+            value={data.user}
+            placeholder='Usuário'
+            style={styles.input}
+          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              onChangeText={(text) => setData({ ...data, pass: text })}
+              value={data.pass}
+              placeholder='Senha'
+              style={styles.input}
+              secureTextEntry={hidden}
+            />
+            <Pressable testID='toggle-visible' style={styles.eyeIcon} onPress={toggleHidden}> 
+              <MaterialCommunityIcons 
+                name={hidden ? 'eye-off' : 'eye'}
+                size={24}
+                color='grey'
+              />
+            </Pressable>
+          </View>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              onChangeText={(text) => setData({ ...data, confirmPass: text })}
+              value={data.confirmPass}
+              placeholder='Confirmar Senha'
+              style={styles.input}
+              secureTextEntry={hidden}
+            />
+            <Pressable testID='toggle-visible' style={styles.eyeIcon} onPress={toggleHidden}> 
                 <MaterialCommunityIcons 
-                  name={hidden ? 'eye' : 'eye-off'}
-                  size={20}
-                  color={'grey'}
+                  name={hidden ? 'eye-off' : 'eye'}
+                  size={24}
+                  color='grey'
                 />
               </Pressable>
-            </View>
           </View>
-          <View style={styles.submitView}>
-            <TouchableOpacity onPress={handleUserData} style={styles.touchableSubmit}>
-              <Text style={styles.textButtonSubmit}>Entrar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.touchableNotSubmit} accessibilityRole='button' accessible={true}>
-              <Text style={styles.textButtonNotSubmit}>Não tem conta? 
-                <Text style={styles.spanButtonNotSubmit}> Cadastre-se</Text>
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.iconsContentView}>
-              <Image source={require('../../assets/google.png')} style={styles.iconsClick} />
-              <Image source={require('../../assets/linkedin.png')} style={styles.iconsClick} />
-              <Image source={require('../../assets/git.png')} style={styles.iconsClick} />
-            </View>
-          </View>
+          <TouchableOpacity onPress={handleUserData} style={styles.submitButton}>
+            <Text style={styles.submitButtonText}>Cadastrar</Text>
+          </TouchableOpacity>
+        </>
+      );
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
+      <View style={styles.content}>
+        <Image style={styles.logo} source={require('../../assets/logo2.png')} />
+        {renderForm()}
+        {formType !== 'initial' && (
+          <TouchableOpacity onPress={() => setFormType('initial')} style={styles.backButton}>
+            <Text style={styles.backButtonText}>Voltar</Text>
+          </TouchableOpacity>
+        )}
+        <View style={styles.socialIcons}>
+          <Image source={require('../../assets/google.png')} style={styles.icon} />
+          <Image source={require('../../assets/linkedin.png')} style={styles.icon} />
+          <Image source={require('../../assets/git.png')} style={styles.icon} />
         </View>
       </View>
-      <View style={styles.viewFooter}>
-        <Text testID='copy-text' style={styles.textFooter}>Recycle.me, Todos os direitos reservados &copy; 2024</Text>
-        <Text style={styles.textFooter}>Desenvolvido por: Guilherme Mafaldo</Text>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Recycle.me, Todos os direitos reservados © 2024</Text>
+        <Text style={styles.footerText}>Desenvolvido por: Guilherme Mafaldo</Text>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  containerSafeArea: {
+  container: {
     flex: 1,
-    backgroundColor: '#006836',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f5fdf6',
   },
-  // title  enter your account
-  titleViewText: {
-    display: 'flex',
-    alignItems: 'center',
+  content: {
+    flex: 1,
     justifyContent: 'center',
-    width: '100%',
-    position: 'absolute',
-    top: 160,
-    left: 10,
-    height: 10,
-    
+    alignItems: 'center',
+    padding: 20,
   },
-  titleEnterYourAccount: {
-    fontSize: 32,
-    fontFamily: 'Roboto',
-    fontWeight: 'bold',
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 30,
+  },
+  buttonContainer: {
+    width: '60%',
     marginBottom: 20,
-    marginTop: 0,
-    color: '#000',
-    position: 'absolute',
-    top: 30, 
   },
-  // initial page
-  containerViewInitialPage: {
-    flex: 1,
-    width: '100%',
-    maxHeight: '100%',
-    padding:20,
-    backgroundColor: '#006836',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 100,
-  },
-  logoInitialPage: {
-    width: 120,
-    height: 120,
-    marginBottom: 20,
-    top: -110,
-  },
-  // content inputs e buttons
-  contentViewInputs: {
-    flex: 1,
-    flexDirection: 'column',
-    width: 400,
-    height: 600,
-    padding:12,
-    backgroundColor: '#f6fdf7',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    borderWidth: 1,
-    borderRadius: 8
-  },
-  inputs: {
-    width: 300,
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 10,
-    paddingLeft: 10,
+  button: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
     borderRadius: 5,
-    top: -40
+    marginBottom: 10,
   },
-  clickHidden: {
-    top: -75,
-    left: 270
-  },
-  // content buttons
-  submitView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: 300,
-    maxHeight: 70,
-    padding: 0,
-    margin: 0,  
-    top: -30  
-  },
-  touchableSubmit: {
-    width: 120,
-    height: 40,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: 'green',
-    padding: 10,
-    paddingLeft: 40,
-    top: 0,
-    left: 90
-  },
-  textButtonSubmit:{
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff'
   },
-  // touchable not submit
-  touchableNotSubmit:{
-    width: 160,
-    top: -45
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 15,
+    borderRadius: 5,
+    marginBottom: 10,
   },
-  textButtonNotSubmit:{
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000'
-  },
-  spanButtonNotSubmit: {
-    color: 'blue'
-  },
-  // icons login content
-  iconsContentView: {
-    flex: 1,
+  passwordContainer: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 100,
-    maxHeight: 60,
-    gap: 20,
+    marginBottom: 0,
+  },
+  eyeIcon: {
     position: 'absolute',
-    top: 100,
-    left: 100
+    right: 15,
   },
-  iconsClick: {
-    width: 35,
-    height: 35,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5
+  submitButton: {
+    backgroundColor: '#4caf50',
+    padding: 15,
+    borderRadius: 5,
+    width: '60%',
+    marginTop: 10,
   },
-  viewFooter: {
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    position: 'absolute',
-    bottom: 70,
-  },
-  textFooter: {
-    fontSize:14,
+  submitButtonText: {
     color: '#fff',
-    fontWeight: 'bold'
-  }
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  backButton: {
+    marginTop: 10,
+  },
+  backButtonText: {
+    color: '#2196F3',
+    textAlign: 'center',
+  },
+  socialIcons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    marginHorizontal: 10,
+  },
+  footer: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#666',
+    fontSize: 12,
+    textAlign: 'center',
+  },
 });
+
