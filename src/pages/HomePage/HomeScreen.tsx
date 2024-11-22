@@ -59,7 +59,8 @@ export const recycleTypes: RecycleType[] = [
     whyRecycle: 'Reciclar metais economiza até 95% da energia necessária para produzir metal novo a partir de minérios. Além disso, reduz significativamente as emissões de gases de efeito estufa e a necessidade de extração de recursos naturais.',
     environmentalImpact: 'A mineração e produção de metais têm impactos ambientais significativos, incluindo desmatamento, erosão do solo e poluição da água. A reciclagem ajuda a mitigar esses impactos, preservando ecossistemas e reduzindo a pegada de carbono.',
     recyclingProcess: 'O processo de reciclagem de metais envolve coleta, separação magnética (para metais ferrosos), trituração, fusão e purificação. O metal reciclado é então moldado em novos produtos ou lingotes para posterior uso.',
-    tips: '1. Separe metais ferrosos (atraídos por ímãs) de não ferrosos.\n2. Limpe os recipientes antes de reciclar.\n3. Amasse latas para economizar espaço.\n4. Não descarte eletrônicos no lixo comum; procure pontos de coleta específicos.'
+    tips: '1. Separe metais ferrosos (atraídos por ímãs) de não ferrosos.\n2. Limpe os recipientes antes de reciclar.\n3. Amasse latas para economizar espaço.\n4. Não descarte eletrônicos no lixo comum; procure pontos de coleta específicos.',
+    
   },
   {
     id: '5',
@@ -72,7 +73,8 @@ export const recycleTypes: RecycleType[] = [
     whyRecycle: 'Compostar resíduos orgânicos fecha o ciclo de nutrientes, devolvendo-os ao solo. Isso melhora a fertilidade do solo, reduz a necessidade de fertilizantes químicos e ajuda a combater a erosão.',
     environmentalImpact: 'Quando descartados em aterros, os resíduos orgânicos produzem metano durante sua decomposição anaeróbica. A compostagem evita essa emissão e cria um produto valioso para jardinagem e agricultura.',
     recyclingProcess: 'A compostagem envolve a decomposição controlada de materiais orgânicos por microrganismos em condições aeróbicas. O processo pode ser feito em pequena escala em residências ou em grande escala em instalações municipais.',
-    tips: '1. Separe restos de frutas, verduras e alimentos não cozidos.\n2. Evite incluir carnes, laticínios e alimentos gordurosos na compostagem doméstica.\n3. Equilibre materiais "verdes" (ricos em nitrogênio) e "marrons" (ricos em carbono).\n4. Mantenha sua composteira úmida e aerada.'
+    tips: '1. Separe restos de frutas, verduras e alimentos não cozidos.\n2. Evite incluir carnes, laticínios e alimentos gordurosos na compostagem doméstica.\n3. Equilibre materiais "verdes" (ricos em nitrogênio) e "marrons" (ricos em carbono).\n4. Mantenha sua composteira úmida e aerada.',
+  
   },
   {
     id: '6',
@@ -85,7 +87,7 @@ export const recycleTypes: RecycleType[] = [
     whyRecycle: 'Reciclar eletrônicos permite a recuperação de metais preciosos como ouro, prata e cobre. Também evita que substâncias perigosas como chumbo, mercúrio e cádmio contaminem o solo e a água.',
     environmentalImpact: 'O descarte inadequado de eletrônicos pode levar à lixiviação de substâncias tóxicas no solo e água subterrânea. A reciclagem adequada mitiga esses riscos e reduz a necessidade de mineração, que muitas vezes causa danos ambientais significativos.',
     recyclingProcess: 'A reciclagem de eletrônicos envolve desmontagem, separação de componentes, trituração e processos especializados para recuperar diferentes materiais. Alguns componentes podem ser reutilizados em novos dispositivos.',
-    tips: '1. Nunca descarte eletrônicos no lixo comum.\n2. Procure pontos de coleta específicos para e-lixo.\n3. Apague dados pessoais antes de descartar dispositivos.\n4. Considere doar equipamentos funcionais para reutilização.'
+    tips: '1. Nunca descarte eletrônicos no lixo comum.\n2. Procure pontos de coleta específicos para e-lixo.\n3. Apague dados pessoais antes de descartar dispositivos.\n4. Considere doar equipamentos funcionais para reutilização.',
   },
 ];
 
@@ -113,6 +115,7 @@ export default function HomeScreen() {
             keyExtractor={item => item.id}
             numColumns={2}
             contentContainerStyle={styles.grid}
+            scrollEnabled={false}
           />
         </View>
         <Modal

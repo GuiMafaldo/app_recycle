@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,6 +8,7 @@ import AgendarColeta from '../../src/pages/AgendarColeta/AgendarColeta'
 import Contact from "../pages/Contato/Contact";
 import LoginScreen from "../pages/Login/LoginScreen";
 import { RootTabParamList, HomeStackParamList, AgendarColetaStackParamList, ContactStackParamList, CreateStackParamList } from '../types/types';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -39,7 +40,7 @@ const AgendarColetaStackScreen = () => (
       }, ...stackScreenOptions
   }}
   id={undefined}>
-    <AgendarColetaStack.Screen name="Coleta" component={AgendarColeta}  />
+    <AgendarColetaStack.Screen name="Coleta" component={AgendarColeta} options={{ title: 'Agendar Coleta'}} />
   </AgendarColetaStack.Navigator>
 );
 
@@ -89,7 +90,7 @@ const MainTabNavigator = () => {
     id={undefined}
     >
       <Tab.Screen name="HomeStack" component={HomeStackScreen} options={{ title: 'Home'}} />
-      <Tab.Screen name="AgendarColetaStack" component={AgendarColetaStackScreen} options={{ title: 'Agendar Coleta' }} />
+      <Tab.Screen name="AgendarColetaStack" component={AgendarColetaStackScreen} />
       <Tab.Screen name="ContactStack" component={ContactStackScreen} options={{ title: 'Contato' }} />
     </Tab.Navigator>
   );
@@ -97,26 +98,18 @@ const MainTabNavigator = () => {
 
 const RootNavigator = () => {
   const { isAuthenticated } = useAuth();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate('Main' as never);
+    }
+  }, [isAuthenticated])
 
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }} id={undefined}>
-      {isAuthenticated ? (
-        <AuthStack.Screen name="Main" component={MainTabNavigator} />
-      ) : (
-        <AuthStack.Screen 
-          name="Login" 
-          component={LoginScreen}
-          options={{ 
-            headerShown: true,
-            headerTintColor: '#fff',
-            headerStyle:{
-              backgroundColor: '#006836',
-            },
-            title: 'Login',
-            ...stackScreenOptions,
-          }}
-        />
-      )}
+    <AuthStack.Navigator screenOptions={{ headerShown: false }} id={undefined} >
+      <AuthStack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+      <AuthStack.Screen name='Main' component={MainTabNavigator} />
     </AuthStack.Navigator>
   );
 };

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import Config from 'react-native-config';
 
-import { service, template, userId } from '../../variaveis/variaveis'
+import { service, template, userId } from '../../variaveis'
 
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import DatePickerComponent from '../../components/DateContent/DateComponent';

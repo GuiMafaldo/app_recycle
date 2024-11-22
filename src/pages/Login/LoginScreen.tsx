@@ -7,47 +7,61 @@ import {
   TouchableOpacity, 
   Image, 
   Pressable, 
-  Alert, 
   StyleSheet 
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../utils/Auth'; // Ajuste o caminho conforme necessário
+import { handleUserCredentials, registerUser } from '../../services/api/endpoints';
 
 export default function LoginRegisterScreen() {
-  const navigation = useNavigation();
-  const [formType, setFormType] = useState('initial'); // 'initial', 'login', ou 'register'
+  const [formType, setFormType] = useState<'initial' | 'login' | 'register'>('initial');
   const [hidden, setHidden] = useState(true);
-  const [data, setData] = useState({
-    user: '',
-    email: '',
-    pass: '',
-    confirmPass: ''
-  });
-  const { login } = useAuth();
-
-  const handleUserData = () => {
-    if (formType === 'login') {
-      if (data.user === 'admin' && data.pass === 'admin123') {
-        login(); 
-        navigation.navigate('HomeScreen' as never);
-      } else {
-        Alert.alert('Usuário ou senha incorretos');
-      }
-    } else if (formType === 'register') {
-      if (data.pass !== data.confirmPass) {
-        Alert.alert('As senhas não coincidem');
-      } else {
-        // Aqui você implementaria a lógica real de cadastro
-        Alert.alert('Cadastro realizado com sucesso!');
-        setFormType('login');
-      }
-    }
-  };
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
   const toggleHidden = () => {
     setHidden(!hidden);
+  };
+
+  const handleUserData = async () => {
+    if (!email.trim() || !password.trim()) {
+      setError('Preencha todos os campos!');
+      return;
+    }
+
+    try {
+      const result = await handleUserCredentials(email, password);
+      setMessage(`Autenticado com sucesso! Token: ${result.token}`);
+      setError('');
+    } catch (err) {
+      setError('Usuário ou senha incorretos, tente novamente!');
+    }
+  };
+
+  const handleRegisterData = async () => {
+    if (!name.trim() || !email.trim() || !password.trim() || !confirmPass.trim()) {
+      setError('Preencha todos os campos!');
+      return;
+    }
+
+    if (password !== confirmPass) {
+      setError('As senhas não coincidem!');
+      return;
+    }
+
+    try {
+      await registerUser(name, email, password);
+      setMessage('Cadastro realizado com sucesso!');
+      setError('');
+      setFormType('login'); // Opcional: redirecionar para login após cadastro
+    } catch (err) {
+      console.log('Err!', err);
+      setError('Erro ao cadastrar o usuário, tente novamente!');
+    }
   };
 
   const renderForm = () => {
@@ -64,88 +78,64 @@ export default function LoginRegisterScreen() {
       );
     }
 
-    if (formType === 'login') {
+    if (formType === 'login' || formType === 'register') {
       return (
         <>
+          {formType === 'register' && (
+            <TextInput
+              onChangeText={setName}
+              value={name}
+              placeholder="Nome"
+              style={styles.input}
+            />
+          )}
           <TextInput
-            onChangeText={(text) => setData({ ...data, user: text })}
-            value={data.user}
-            placeholder='Usuário'
+            onChangeText={setEmail}
+            value={email}
+            placeholder="E-mail"
             style={styles.input}
           />
           <View style={styles.passwordContainer}>
             <TextInput
-              onChangeText={(text) => setData({ ...data, pass: text })}
-              value={data.pass}
-              placeholder='Senha'
+              onChangeText={setPassword}
+              value={password}
+              placeholder="Senha"
               style={styles.input}
               secureTextEntry={hidden}
             />
-            <Pressable testID='toggle-visible' style={styles.eyeIcon} onPress={toggleHidden}> 
+            <Pressable style={styles.eyeIcon} onPress={toggleHidden}>
               <MaterialCommunityIcons 
-                name={hidden ? 'eye-off' : 'eye'}
-                size={24}
-                color='grey'
+                name={hidden ? 'eye-off' : 'eye'} 
+                size={24} 
+                color="grey" 
               />
             </Pressable>
           </View>
-          <TouchableOpacity onPress={handleUserData} style={styles.submitButton}>
-            <Text style={styles.submitButtonText}>Entrar</Text>
-          </TouchableOpacity>
-        </>
-      );
-    }
-
-    if (formType === 'register') {
-      return (
-        <>
-          <TextInput
-            onChangeText={(text) => setData({ ...data, email: text })}
-            value={data.email}
-            placeholder='Email'
-            style={styles.input}
-            keyboardType="email-address"
-          />
-          <TextInput
-            onChangeText={(text) => setData({ ...data, user: text })}
-            value={data.user}
-            placeholder='Usuário'
-            style={styles.input}
-          />
-          <View style={styles.passwordContainer}>
-            <TextInput
-              onChangeText={(text) => setData({ ...data, pass: text })}
-              value={data.pass}
-              placeholder='Senha'
-              style={styles.input}
-              secureTextEntry={hidden}
-            />
-            <Pressable testID='toggle-visible' style={styles.eyeIcon} onPress={toggleHidden}> 
-              <MaterialCommunityIcons 
-                name={hidden ? 'eye-off' : 'eye'}
-                size={24}
-                color='grey'
+          {formType === 'register' && (
+            <View style={styles.passwordContainer}>
+              <TextInput
+                onChangeText={setConfirmPass}
+                value={confirmPass}
+                placeholder="Confirmar Senha"
+                style={styles.input}
+                secureTextEntry={hidden}
               />
-            </Pressable>
-          </View>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              onChangeText={(text) => setData({ ...data, confirmPass: text })}
-              value={data.confirmPass}
-              placeholder='Confirmar Senha'
-              style={styles.input}
-              secureTextEntry={hidden}
-            />
-            <Pressable testID='toggle-visible' style={styles.eyeIcon} onPress={toggleHidden}> 
+              <Pressable style={styles.eyeIcon} onPress={toggleHidden}>
                 <MaterialCommunityIcons 
-                  name={hidden ? 'eye-off' : 'eye'}
-                  size={24}
-                  color='grey'
+                  name={hidden ? 'eye-off' : 'eye'} 
+                  size={24} 
+                  color="grey" 
                 />
               </Pressable>
-          </View>
-          <TouchableOpacity onPress={handleUserData} style={styles.submitButton}>
-            <Text style={styles.submitButtonText}>Cadastrar</Text>
+            </View>
+          )}
+          <TouchableOpacity 
+            onPress={formType === 'login' ? handleUserData : handleRegisterData} 
+            style={styles.submitButton}
+          >
+            <Text style={styles.submitButtonText}>
+              {formType === 'login' ? 'Entrar' : 'Cadastrar'}
+            </Text>
           </TouchableOpacity>
         </>
       );
@@ -163,11 +153,8 @@ export default function LoginRegisterScreen() {
             <Text style={styles.backButtonText}>Voltar</Text>
           </TouchableOpacity>
         )}
-        <View style={styles.socialIcons}>
-          <Image source={require('../../assets/google.png')} style={styles.icon} />
-          <Image source={require('../../assets/linkedin.png')} style={styles.icon} />
-          <Image source={require('../../assets/git.png')} style={styles.icon} />
-        </View>
+        {error && <Text style={styles.error}>{error}</Text>}
+        {message && <Text style={styles.message}>{message}</Text>}
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Recycle.me, Todos os direitos reservados © 2024</Text>
@@ -221,15 +208,14 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 0,
+    marginBottom: 10,
   },
   eyeIcon: {
     position: 'absolute',
     right: 15,
   },
   submitButton: {
-    backgroundColor: '#4caf50',
+    backgroundColor: '#4CAF50',
     padding: 15,
     borderRadius: 5,
     width: '60%',
@@ -248,15 +234,13 @@ const styles = StyleSheet.create({
     color: '#2196F3',
     textAlign: 'center',
   },
-  socialIcons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
+  error: {
+    color: 'red',
+    marginTop: 10,
   },
-  icon: {
-    width: 40,
-    height: 40,
-    marginHorizontal: 10,
+  message: {
+    color: 'green',
+    marginTop: 10,
   },
   footer: {
     padding: 20,
@@ -268,4 +252,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
