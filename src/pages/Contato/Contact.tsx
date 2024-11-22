@@ -20,8 +20,8 @@ export default function Contact() {
           <View style={styles.contentSup}>
             <Image style={styles.imageSup} source={require('../../assets/sup.png')} />
               <View>
-                <Text style={styles.telAndEmail}>Tel: (ddd)xxxxx-xxxx</Text>
-                <Text style={styles.telAndEmail}>E-mail: exemplo@email.com</Text>
+                <Text style={styles.telAndEmail}>Tel: (11)xxxxx-xxxx</Text>
+                <Text style={styles.telAndEmail}>E-mail: info@ecorecycle.com</Text>
             </View>
           </View>
         </TouchableOpacity>

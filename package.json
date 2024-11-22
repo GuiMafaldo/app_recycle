@@ -30,6 +30,7 @@
     "react": "18",
     "react-dom": "18",
     "react-native": "^0.76.2",
+    "react-native-config": "^1.5.3",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-hide-show-password-input": "^1.2.0",
     "react-native-image-filter-kit": "^0.8.0",

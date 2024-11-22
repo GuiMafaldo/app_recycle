@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+
+import Config from 'react-native-config';
+
+import { service, template, userId } from '../../variaveis/variaveis'
+
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import DatePickerComponent from '../../components/DateContent/DateComponent';
 import emailjs from 'emailjs-com';
@@ -41,11 +46,12 @@ export default function AgendarColeta() {
     
         try {
             const response = await emailjs.send(
-                'service_l526sbg',
-                'template_7hb4dvr',
+                service,
+                template,
                 templateParams,
-                'Sj03SkwQcG--LG4pT'
+                userId,
             );
+            
             console.log('E-mail enviado com sucesso:', response);
             Alert.alert('Sucesso', 'Sua solicitação de coleta foi enviada com sucesso!');
             // Limpar o formulário após o envio bem-sucedido
@@ -56,7 +62,7 @@ export default function AgendarColeta() {
             setMaterial('');
             setData(null);
         } catch (error) {
-            console.error('Erro ao enviar e-mail:', error);
+            console.error('Erro ao enviar e-mail:', error)
             Alert.alert('Erro', 'Houve um problema ao enviar sua solicitação. Por favor, tente novamente mais tarde.');
         } finally {
             setIsLoading(false);
@@ -227,7 +233,8 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         tintColor: '#888',
-        marginLeft: -30,
+        marginLeft: -10,
+        right:20
     },
     viewDate: {
         marginBottom: 20,

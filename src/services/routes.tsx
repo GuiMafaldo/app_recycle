@@ -39,7 +39,7 @@ const AgendarColetaStackScreen = () => (
       }, ...stackScreenOptions
   }}
   id={undefined}>
-    <AgendarColetaStack.Screen name="AgendarColeta" component={AgendarColeta}  />
+    <AgendarColetaStack.Screen name="Coleta" component={AgendarColeta}  />
   </AgendarColetaStack.Navigator>
 );
 
